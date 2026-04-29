@@ -103,6 +103,35 @@ public:
         std::size_t nvr,
         FMIString value[]) const;
 
+    /* Called from fmi2GetDirectionalDerivative()/fmiGetDirectionalDerivative().
+     * Throws std::logic_error by default.
+     */
+    virtual void GetDirectionalDerivative(
+        const FMIValueReference vUnknown_ref[],
+        std::size_t nUnknown,
+        const FMIValueReference vKnown_ref[],
+        std::size_t nKnown,
+        const FMIReal dvKnown[],
+        FMIReal dvUnknown[]) const;
+
+    /* Called from fmi2SetRealInputDerivatives()/fmiSetRealInputDerivatives().
+     * Throws std::logic_error by default.
+     */
+    virtual void SetRealInputDerivatives(
+        const FMIValueReference vr[],
+        std::size_t nvr,
+        const FMIInteger order[],
+        const FMIReal value[]);
+
+    /* Called from fmi2GetRealOutputDerivatives()/fmiGetRealOutputDerivatives().
+     * Throws std::logic_error by default.
+     */
+    virtual void GetRealOutputDerivatives(
+        const FMIValueReference vr[],
+        std::size_t nvr,
+        const FMIInteger order[],
+        FMIReal value[]) const;
+
     /* Called from fmi2GetFMUState().
      * Never called with FMI 1.x.
      * Throws std::logic_error by default.

@@ -318,33 +318,71 @@ fmiStatus fmiSetString  (fmiComponent c, const fmiValueReference vr[], size_t nv
 }
 
 
+fmiStatus fmiGetDirectionalDerivative(
+    fmiComponent c,
+    const fmiValueReference vUnknown_ref[],
+    size_t nUnknown,
+    const fmiValueReference vKnown_ref[],
+    size_t nKnown,
+    const fmiReal dvKnown[],
+    fmiReal dvUnknown[])
+{
+    const auto component = reinterpret_cast<Component*>(c);
+    try {
+        component->slave->GetDirectionalDerivative(
+            vUnknown_ref, nUnknown,
+            vKnown_ref, nKnown,
+            dvKnown, dvUnknown);
+        return fmiOK;
+    } catch (const cppfmu::FatalError& e) {
+        component->logger.Log(fmiFatal, "", e.what());
+        return fmiFatal;
+    } catch (const std::exception& e) {
+        component->logger.Log(fmiError, "", e.what());
+        return fmiError;
+    }
+}
+
+
 fmiStatus fmiSetRealInputDerivatives(
     fmiComponent c,
-    const  fmiValueReference /*vr*/[],
-    size_t /*nvr*/,
-    const  fmiInteger /*order*/[],
-    const  fmiReal /*value*/[])
+    const  fmiValueReference vr[],
+    size_t nvr,
+    const  fmiInteger order[],
+    const  fmiReal value[])
 {
-    reinterpret_cast<Component*>(c)->logger.Log(
-        fmiError,
-        "cppfmu",
-        "FMI function not supported: fmiSetRealInputDerivatives");
-    return fmiError;
+    const auto component = reinterpret_cast<Component*>(c);
+    try {
+        component->slave->SetRealInputDerivatives(vr, nvr, order, value);
+        return fmiOK;
+    } catch (const cppfmu::FatalError& e) {
+        component->logger.Log(fmiFatal, "", e.what());
+        return fmiFatal;
+    } catch (const std::exception& e) {
+        component->logger.Log(fmiError, "", e.what());
+        return fmiError;
+    }
 }
 
 
 fmiStatus fmiGetRealOutputDerivatives(
     fmiComponent c,
-    const   fmiValueReference /*vr*/[],
-    size_t  /*nvr*/,
-    const   fmiInteger /*order*/[],
-    fmiReal /*value*/[])
+    const   fmiValueReference vr[],
+    size_t  nvr,
+    const   fmiInteger order[],
+    fmiReal value[])
 {
-    reinterpret_cast<Component*>(c)->logger.Log(
-        fmiError,
-        "cppfmu",
-        "FMI function not supported: fmiGetRealOutputDerivatives");
-    return fmiError;
+    const auto component = reinterpret_cast<Component*>(c);
+    try {
+        component->slave->GetRealOutputDerivatives(vr, nvr, order, value);
+        return fmiOK;
+    } catch (const cppfmu::FatalError& e) {
+        component->logger.Log(fmiFatal, "", e.what());
+        return fmiFatal;
+    } catch (const std::exception& e) {
+        component->logger.Log(fmiError, "", e.what());
+        return fmiError;
+    }
 }
 
 
@@ -908,46 +946,67 @@ fmi2Status fmi2DeSerializeFMUstate(
 
 fmi2Status fmi2GetDirectionalDerivative(
     fmi2Component c,
-    const fmi2ValueReference[],
-    size_t,
-    const fmi2ValueReference[],
-    size_t,
-    const fmi2Real[],
-    fmi2Real[])
+    const fmi2ValueReference vUnknown_ref[],
+    size_t nUnknown,
+    const fmi2ValueReference vKnown_ref[],
+    size_t nKnown,
+    const fmi2Real dvKnown[],
+    fmi2Real dvUnknown[])
 {
-    reinterpret_cast<Component*>(c)->logger.Log(
-        fmi2Error,
-        "cppfmu",
-        "FMI function not supported: fmi2GetDirectionalDerivative");
-    return fmi2Error;
+    const auto component = reinterpret_cast<Component*>(c);
+    try {
+        component->slave->GetDirectionalDerivative(
+            vUnknown_ref, nUnknown,
+            vKnown_ref, nKnown,
+            dvKnown, dvUnknown);
+        return fmi2OK;
+    } catch (const cppfmu::FatalError& e) {
+        component->logger.Log(fmi2Fatal, "", e.what());
+        return fmi2Fatal;
+    } catch (const std::exception& e) {
+        component->logger.Log(fmi2Error, "", e.what());
+        return fmi2Error;
+    }
 }
 
 fmi2Status fmi2SetRealInputDerivatives(
     fmi2Component c,
-    const fmi2ValueReference[],
-    size_t,
-    const fmi2Integer[],
-    const fmi2Real[])
+    const fmi2ValueReference vr[],
+    size_t nvr,
+    const fmi2Integer order[],
+    const fmi2Real value[])
 {
-    reinterpret_cast<Component*>(c)->logger.Log(
-        fmi2Error,
-        "cppfmu",
-        "FMI function not supported: fmi2SetRealInputDerivatives");
-    return fmi2Error;
+    const auto component = reinterpret_cast<Component*>(c);
+    try {
+        component->slave->SetRealInputDerivatives(vr, nvr, order, value);
+        return fmi2OK;
+    } catch (const cppfmu::FatalError& e) {
+        component->logger.Log(fmi2Fatal, "", e.what());
+        return fmi2Fatal;
+    } catch (const std::exception& e) {
+        component->logger.Log(fmi2Error, "", e.what());
+        return fmi2Error;
+    }
 }
 
 fmi2Status fmi2GetRealOutputDerivatives(
     fmi2Component c,
-    const fmi2ValueReference [],
-    size_t,
-    const fmi2Integer[],
-    fmi2Real[])
+    const fmi2ValueReference vr[],
+    size_t nvr,
+    const fmi2Integer order[],
+    fmi2Real value[])
 {
-    reinterpret_cast<Component*>(c)->logger.Log(
-        fmi2Error,
-        "cppfmu",
-        "FMI function not supported: fmiGetRealOutputDerivatives");
-    return fmi2Error;
+    const auto component = reinterpret_cast<Component*>(c);
+    try {
+        component->slave->GetRealOutputDerivatives(vr, nvr, order, value);
+        return fmi2OK;
+    } catch (const cppfmu::FatalError& e) {
+        component->logger.Log(fmi2Fatal, "", e.what());
+        return fmi2Fatal;
+    } catch (const std::exception& e) {
+        component->logger.Log(fmi2Error, "", e.what());
+        return fmi2Error;
+    }
 }
 
 fmi2Status fmi2DoStep(

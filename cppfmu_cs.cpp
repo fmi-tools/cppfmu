@@ -139,6 +139,38 @@ void SlaveInstance::GetString(
 }
 
 
+void SlaveInstance::GetDirectionalDerivative(
+    const FMIValueReference /*vUnknown_ref*/[],
+    std::size_t /*nUnknown*/,
+    const FMIValueReference /*vKnown_ref*/[],
+    std::size_t /*nKnown*/,
+    const FMIReal /*dvKnown*/[],
+    FMIReal /*dvUnknown*/[]) const
+{
+    throw std::logic_error("Operation not supported: get directional derivative");
+}
+
+
+void SlaveInstance::SetRealInputDerivatives(
+    const FMIValueReference /*vr*/[],
+    std::size_t /*nvr*/,
+    const FMIInteger /*order*/[],
+    const FMIReal /*value*/[])
+{
+    throw std::logic_error("Operation not supported: set real input derivatives");
+}
+
+
+void SlaveInstance::GetRealOutputDerivatives(
+    const FMIValueReference /*vr*/[],
+    std::size_t /*nvr*/,
+    const FMIInteger /*order*/[],
+    FMIReal /*value*/[]) const
+{
+    throw std::logic_error("Operation not supported: get real output derivatives");
+}
+
+
 void SlaveInstance::GetFMUState(FMIFMUState* state)
 {
     throw std::logic_error("Operation not supported: get FMU state");
