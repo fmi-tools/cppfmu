@@ -39,4 +39,14 @@ if(NOT CPPFMU_FMI_1)
     target_compile_features(cs_test PRIVATE cxx_std_11)
     target_link_libraries(cs_test PRIVATE cppfmu)
     add_test(NAME "cs_test" COMMAND cs_test)
+else()
+    add_executable(cs_test_fmi1
+        "tests/cs_test.cpp"
+        "tests/cs_slave.cpp"
+        "fmi_functions.cpp"
+    )
+    target_compile_features(cs_test_fmi1 PRIVATE cxx_std_11)
+    target_link_libraries(cs_test_fmi1 PRIVATE cppfmu)
+    target_compile_definitions(cs_test_fmi1 PRIVATE CPPFMU_USE_FMI_1_0 "MODEL_IDENTIFIER=")
+    add_test(NAME "cs_test_fmi1" COMMAND cs_test_fmi1)
 endif()

@@ -318,31 +318,6 @@ fmiStatus fmiSetString  (fmiComponent c, const fmiValueReference vr[], size_t nv
 }
 
 
-fmiStatus fmiGetDirectionalDerivative(
-    fmiComponent c,
-    const fmiValueReference vUnknown_ref[],
-    size_t nUnknown,
-    const fmiValueReference vKnown_ref[],
-    size_t nKnown,
-    const fmiReal dvKnown[],
-    fmiReal dvUnknown[])
-{
-    const auto component = reinterpret_cast<Component*>(c);
-    try {
-        component->slave->GetDirectionalDerivative(
-            vUnknown_ref, nUnknown,
-            vKnown_ref, nKnown,
-            dvKnown, dvUnknown);
-        return fmiOK;
-    } catch (const cppfmu::FatalError& e) {
-        component->logger.Log(fmiFatal, "", e.what());
-        return fmiFatal;
-    } catch (const std::exception& e) {
-        component->logger.Log(fmiError, "", e.what());
-        return fmiError;
-    }
-}
-
 
 fmiStatus fmiSetRealInputDerivatives(
     fmiComponent c,
