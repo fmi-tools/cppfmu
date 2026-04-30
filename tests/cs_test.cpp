@@ -124,8 +124,8 @@ int main()
     // Enable derivative support (vr=1) and set seed (vr=2) (FMI 1.0)
     {
         const fmiValueReference enableVr[] = {1};
-        const fmiReal enableVal = 1.0;
-        auto rc = fmiSetReal(instance, enableVr, 1, &enableVal);
+        const fmiBoolean enableVal = fmiTrue;
+        auto rc = fmiSetBoolean(instance, enableVr, 1, &enableVal);
         assert(rc == fmiOK);
     }
     {
@@ -133,6 +133,15 @@ int main()
         const fmiReal seedVal = 2.0;
         auto rc = fmiSetReal(instance, seedVr, 1, &seedVal);
         assert(rc == fmiOK);
+    }
+
+    // Verify derivative support flag via GetBoolean
+    {
+        const fmiValueReference enableVr[] = {1};
+        fmiBoolean val = fmiFalse;
+        auto rc = fmiGetBoolean(instance, enableVr, 1, &val);
+        assert(rc == fmiOK);
+        assert(val == fmiTrue);
     }
 
     // fmiSetRealInputDerivatives — success (FMI 1.0)
@@ -268,8 +277,8 @@ int main()
     // Enable derivative support (vr=1) and set seed (vr=2) (FMI 2.0)
     {
         const fmi2ValueReference enableVr[] = {1};
-        const fmi2Real enableVal = 1.0;
-        auto rc = fmi2SetReal(instance, enableVr, 1, &enableVal);
+        const fmi2Boolean enableVal = fmi2True;
+        auto rc = fmi2SetBoolean(instance, enableVr, 1, &enableVal);
         assert(rc == fmi2OK);
     }
     {
@@ -277,6 +286,15 @@ int main()
         const fmi2Real seedVal = 2.0;
         auto rc = fmi2SetReal(instance, seedVr, 1, &seedVal);
         assert(rc == fmi2OK);
+    }
+
+    // Verify derivative support flag via GetBoolean
+    {
+        const fmi2ValueReference enableVr[] = {1};
+        fmi2Boolean val = fmi2False;
+        auto rc = fmi2GetBoolean(instance, enableVr, 1, &val);
+        assert(rc == fmi2OK);
+        assert(val == fmi2True);
     }
 
     // fmi2SetRealInputDerivatives — success (FMI 2.0)

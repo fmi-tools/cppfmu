@@ -21,8 +21,6 @@ public:
         for (std::size_t i = 0; i < nvr; ++i) {
             if (vr[i] == 0) {
                 value_ = value[i];
-            } else if (vr[i] == 1) {
-                derivativeSupported_ = (value[i] != 0.0);
             } else if (vr[i] == 2) {
                 seed_ = value[i];
             } else {
@@ -39,10 +37,36 @@ public:
         for (std::size_t i = 0; i < nvr; ++i) {
             if (vr[i] == 0) {
                 value[i] = value_;
-            } else if (vr[i] == 1) {
-                value[i] = derivativeSupported_ ? 1.0 : 0.0;
             } else if (vr[i] == 2) {
                 value[i] = seed_;
+            } else {
+                throw std::logic_error("Invalid value reference");
+            }
+        }
+    }
+
+    void SetBoolean(
+        const cppfmu::FMIValueReference vr[],
+        std::size_t nvr,
+        const cppfmu::FMIBoolean value[]) override
+    {
+        for (std::size_t i = 0; i < nvr; ++i) {
+            if (vr[i] == 1) {
+                derivativeSupported_ = (value[i] == cppfmu::FMITrue);
+            } else {
+                throw std::logic_error("Invalid value reference");
+            }
+        }
+    }
+
+    void GetBoolean(
+        const cppfmu::FMIValueReference vr[],
+        std::size_t nvr,
+        cppfmu::FMIBoolean value[]) const override
+    {
+        for (std::size_t i = 0; i < nvr; ++i) {
+            if (vr[i] == 1) {
+                value[i] = derivativeSupported_ ? cppfmu::FMITrue : cppfmu::FMIFalse;
             } else {
                 throw std::logic_error("Invalid value reference");
             }
