@@ -98,7 +98,7 @@ class CppFmuConan(ConanFile):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
-        cmake.ctest("--output-on-failure")
+        cmake.ctest(cli_args=["--output-on-failure"])
 
     def package(self):
         copy(self, "LICENCE.txt", self.source_folder,
